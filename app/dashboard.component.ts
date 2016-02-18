@@ -12,18 +12,21 @@ import { Router } from 'angular2/router';
 })
 
 export class DashboardComponent implements OnInit {
-  heroes: Hero[] = [];
-    
-  ngOnInit() {
-    this._heroService.getHeroes()
-      .then(heroes => this.heroes = heroes.slice(1,5));
-  }
-  gotoDetail(hero: Hero) {
-    let link = ['HeroDetail', { id: hero.id }];
-    this._router.navigate(link);
-  }
-  constructor(
-    private _router: Router,
-    private _heroService: HeroService) {
-  }
+    heroes: Hero[] = [];
+    errorMessage: string;
+
+    ngOnInit() {
+        this._heroService.getHeroes()
+                 .subscribe(
+                   heroes => this.heroes = heroes.slice(1,5),
+                   error =>  this.errorMessage = <any>error);
+    }
+    gotoDetail(hero: Hero) {
+        let link = ['HeroDetail', { id: hero.id }];
+        this._router.navigate(link);
+    }
+    constructor(
+        private _router: Router,
+        private _heroService: HeroService) {
+    }
 }

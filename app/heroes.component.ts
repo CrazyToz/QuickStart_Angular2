@@ -14,6 +14,7 @@ import { Router } from 'angular2/router';
 export class HeroesComponent implements OnInit {
     public selectedHero : Hero ;
     public heroes : Hero[];  
+    errorMessage: string;
     
     constructor(
         private _router: Router,
@@ -26,7 +27,10 @@ export class HeroesComponent implements OnInit {
     onSelect(hero: Hero) { this.selectedHero = hero; }
     
     getHeroes() {
-        this._heroService.getHeroesSlowly().then(heroes => this.heroes = heroes);
+        this._heroService.getHeroes()
+                 .subscribe(
+                   heroes => this.heroes = heroes,
+                   error =>  this.errorMessage = <any>error);
     }
     
     gotoDetail() {

@@ -6,5 +6,7 @@
     <label>name: </label>
     <input [(ngModel)]="hero.name" placeholder="name" />
   </div>
+  <button (click)="updateHero()">Enregistrer</button>
   <button (click)="goBack()">Back</button>
 </div>
+<div class="error" *ngIf="errorMessage">{{errorMessage}}</div>

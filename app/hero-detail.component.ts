@@ -11,6 +11,7 @@ import { HeroService } from './hero.service';
 
 export class HeroDetailComponent {
     hero: Hero;
+    errorMessage: string;
     
     constructor(
         private _heroService: HeroService,
@@ -20,7 +21,16 @@ export class HeroDetailComponent {
     ngOnInit() {
         let id = +this._routeParams.get('id');
         this._heroService.getHero(id)
-        .then(hero => this.hero = hero);
+            .subscribe(
+                hero => this.hero = hero,
+                error =>  this.errorMessage = <any>error);
+    }
+    
+    updateHero() {
+        this._heroService.updateHero(this.hero)
+            .subscribe(
+                hero => this.hero = hero,
+                error =>  this.errorMessage = <any>error);
     }
     
     goBack() {
